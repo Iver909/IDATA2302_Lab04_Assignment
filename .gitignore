@@ -1,1 +1,48 @@
-/target/
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Maven
+target/
+
+# Java compiled files
+*.class
+
+# Eclipse / andre IDE-er
+.classpath
+.project
+.settings/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+
+# JVM crash dumps
+hs_err_pid*
+replay_pid*
+
+# Logger og midlertidige filer
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Lokale miljøfiler
+.env
+.env.*
+!.env.example
