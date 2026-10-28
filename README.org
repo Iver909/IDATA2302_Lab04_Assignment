@@ -1,3 +1,6 @@
 #+title: Lab 04: Trees
 
-See the associated question set on Blackboard
+See the associated question set on the companion website.
+
+Link to the collaborative Word document for solving the assignment:
+https://studntnu-my.sharepoint.com/:w:/g/personal/iversr_ntnu_no/IQC3W1jyX5LXSanXKpc8EnG1AWxK8uowi0sGUpCEkg-SCe0?e=Z2rYWD
