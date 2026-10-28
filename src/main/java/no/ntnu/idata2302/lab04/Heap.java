@@ -40,7 +40,7 @@ public class Heap {
      *              {@code false} if not.
      */
     public boolean isEmpty()    {
-        return (array.size() == 1 && array.get(0) == 0);
+        return (array.size() <= 1 && array.get(0) == 0);
     }
 
     /**
@@ -73,12 +73,26 @@ public class Heap {
         }
 
         array.add(k);
-        bubbleUpwards(array.size() - 1);
+        bubbleUp(array.size() - 1);
     }
 
+    /**
+     * Removes the lowest value from the heap, and returns it.
+     *
+     * @return the lowest value of the heap.
+     */
     public int takeMinimum() {
-        // TODO: Implement this operation
-        throw new RuntimeException("Not yet implemented");
+        if (this.isEmpty()) {
+            throw new IllegalStateException("Heap is empty. No lowest value found.");
+        }
+
+        int lowest = array.get(1);
+
+        swap(1, array.size() - 1);
+        array.remove(array.size() - 1);
+
+
+
     }
 
     public void decreaseKey(int i, int k) {
@@ -87,14 +101,51 @@ public class Heap {
     }
 
     /**
+     * Bubbles a value down into its correct priority position.
+     *
+     * @param index is the index of the value to bubble down.
+     * @throws IndexOutOfBoundsException if the given {@code index} is less than {@code 1},
+     *              or higher than max index {@code array.size() - 1}.
+     */
+    private void bubbleDown(int index)  {
+        if (index < 1 || index >= array.size()) {
+            throw new IndexOutOfBoundsException(
+                "Index less than 1 or higher than max array index."
+            );
+        }
+
+        int indexValue = array.get(index);
+
+        int leftChildValue = 0;
+        int rightChildValue = 0;
+        try {
+            leftChildValue = array.get(leftChildOf(index));
+        } catch (Exception e)   {
+            // Expected if no child. Do nothing and continue.
+        }
+        try {
+            rightChildValue = array.get(rightChildOf(index));
+        } catch (Exception e)   {
+            // Expected if no child. Do nothing and continue.
+        }
+
+        if (leftChildValue == 0 && rightChildValue == 0)    {
+            // Our value is bubbled all the way to the bottom.
+            return;
+        }
+        // TODO: Finish method.
+    }
+
+    /**
      * Bubbles the value at the given {@code index} upwards
-     * as long as it's a lower value than its current parent.
+     * as long as it's a lower value than its current parent,
+     * or the parent is a placeholder value {@code 0}.
      *
      * @param index is the index of the value to potentially bubble upwards.
      * @throws IndexOutOfBoundsException if the given {@code index} is less than {@code 1},
      *              or higher than max index {@code array.size() - 1}.
      */
-    private void bubbleUpwards(int index)    {
+    private void bubbleUp(int index)    {
         if (index < 1 || index >= array.size()) {
             throw new IndexOutOfBoundsException(
                 "Index less than 1 or higher than max array index."
@@ -111,9 +162,9 @@ public class Heap {
         Integer k = array.get(index);
         Integer parent = array.get(parentIndex);
 
-        if (k < parent)  {
+        if (k < parent || parent == 0)  {
             swap(index, parentIndex);
-            bubbleUpwards(parentIndex);
+            bubbleUp(parentIndex);
         }
     }
 
