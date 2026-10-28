@@ -31,9 +31,25 @@ public class Heap {
     private ArrayList<Integer> array;
 
     /**
-     * Creates a new {@link Heap} object
-     * with an {@link ArrayList}
-     * containing the {@link Integer} value {@code 0}.
+     * Checks if the heap is empty.
+     * The heap is defined as empty if it only holds the placeholder value {@code 0},
+     * and nothing else.
+     *
+     * @return {@code true} if the size of {@link #array} is {@code 1},
+     *              and its only element is the value {@code 0}.
+     *              {@code false} if not.
+     */
+    public boolean isEmpty()    {
+        return (array.size() == 1 && array.get(0) == 0);
+    }
+
+    /**
+     * Creates a new {@link Heap} object with an {@link ArrayList}.
+     *
+     * <p>
+     *   The value {@code 0} is added in the first spot as a placeholder
+     *   to make the rest of the list logic use 1-indexing.
+     * </p>
      */
     public Heap() {
         array = new ArrayList<Integer>();
@@ -41,8 +57,11 @@ public class Heap {
     }
 
     public void insert(Integer k) {
-        // TODO: Implement this operation
-        throw new RuntimeException("Not yet implemented");
+        if (k == null)  {
+            throw new IllegalArgumentException("Cannot insert null in the heap.");
+        }
+
+
     }
 
     public int takeMinimum() {
