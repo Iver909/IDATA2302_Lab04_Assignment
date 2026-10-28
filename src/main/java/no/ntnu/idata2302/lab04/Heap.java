@@ -56,12 +56,24 @@ public class Heap {
         array.add(0);
     }
 
+    /**
+     * Inserts the value {@code k} in the heap,
+     * and bubbles it upwards into its correct priority spot.
+     *
+     * @param k is the value to insert.
+     * @throws IllegalArgumentException if {@code k} is {@code null},
+     *              or if {@code k} is less than {@code 1}.
+     */
     public void insert(Integer k) {
         if (k == null)  {
             throw new IllegalArgumentException("Cannot insert null in the heap.");
         }
+        if (k < 1)  {
+            throw new IllegalArgumentException("Only values above 0 are approved.");
+        }
 
-
+        array.add(k);
+        bubbleUpwards(array.size() - 1);
     }
 
     public int takeMinimum() {
@@ -72,6 +84,37 @@ public class Heap {
     public void decreaseKey(int i, int k) {
         // TODO: Implement this operation
         throw new RuntimeException("Not yet implemented");
+    }
+
+    /**
+     * Bubbles the value at the given {@code index} upwards
+     * as long as it's a lower value than its current parent.
+     *
+     * @param index is the index of the value to potentially bubble upwards.
+     * @throws IndexOutOfBoundsException if the given {@code index} is less than {@code 1},
+     *              or higher than max index {@code array.size() - 1}.
+     */
+    private void bubbleUpwards(int index)    {
+        if (index < 1 || index >= array.size()) {
+            throw new IndexOutOfBoundsException(
+                "Index less than 1 or higher than max array index."
+            );
+        }
+
+        // If the index is the top node in the tree -> Don't bubble further.
+        if (index == 1) {
+            return;
+        }
+
+        int parentIndex = parentOf(index);
+
+        Integer k = array.get(index);
+        Integer parent = array.get(parentIndex);
+
+        if (k < parent)  {
+            swap(index, parentIndex);
+            bubbleUpwards(parentIndex);
+        }
     }
 
     /**
@@ -105,10 +148,10 @@ public class Heap {
     }
 
     /**
-     * Swaps the index positions of two values.
+     * Swaps the indexes, and thus {@link #array} placements, of two values.
      *
-     * @param pos1 one value whom's index position will be swapped.
-     * @param pos2 one value whom's index position will be swapped.
+     * @param pos1 the index of a value to swap position.
+     * @param pos2 the index of a value to swap position.
      */
     void swap(int pos1, int pos2) {
         int temp = array.get(pos1);
