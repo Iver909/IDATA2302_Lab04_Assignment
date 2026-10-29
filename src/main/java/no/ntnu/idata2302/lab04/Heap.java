@@ -107,8 +107,6 @@ public class Heap {
      * @param index is the index of the value to bubble down.
      * @throws IndexOutOfBoundsException if the given {@code index} is less than {@code 1},
      *              or higher than max index {@code array.size() - 1}.
-     * @throws UnknownError if no if-condition is triggered for what to do with
-     *              the value at the given {@code index}.
      */
     private void bubbleDown(int index)  {
         if (index < 1 || index >= array.size()) {
@@ -137,26 +135,19 @@ public class Heap {
         }
 
         if ((leftChildValue == 0 && rightChildValue == 0) ||
-            (indexValue == leftChildValue || indexValue == rightChildValue))    {
-            // Our value is either bubbled all the way to the bottom,
-            // or the same value as one of its children.
-            // Value is in the correct spot. Return without further operations.
+            (indexValue <= leftChildValue && indexValue <= rightChildValue) ||
+            (indexValue <= leftChildValue && rightChildValue == 0) ||
+            (leftChildValue == 0 && indexValue <= rightChildValue))    {
+            // Our value has reached its correct position.
             return;
         }
-        if (indexValue < leftChildValue)    {
+        if (leftChildValue < rightChildValue)   {
             swap(index, leftChildIndex);
             bubbleDown(leftChildIndex);
-            return;
-        }
-        if (indexValue > rightChildValue && rightChildValue != 0)  {
+        }   else    {
             swap(index, rightChildIndex);
             bubbleDown(rightChildIndex);
-            return;
         }
-
-        throw new UnknownError(
-            "Unknown error in method bubbleDown(). All if-conditions failed."
-        );
     }
 
     /**
