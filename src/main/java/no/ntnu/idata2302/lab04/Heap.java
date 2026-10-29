@@ -91,8 +91,9 @@ public class Heap {
         swap(1, array.size() - 1);
         array.remove(array.size() - 1);
 
+        bubbleDown(1);
 
-
+        return lowest;
     }
 
     public void decreaseKey(int i, int k) {
@@ -106,6 +107,8 @@ public class Heap {
      * @param index is the index of the value to bubble down.
      * @throws IndexOutOfBoundsException if the given {@code index} is less than {@code 1},
      *              or higher than max index {@code array.size() - 1}.
+     * @throws UnknownError if no if-condition is triggered for what to do with
+     *              the value at the given {@code index}.
      */
     private void bubbleDown(int index)  {
         if (index < 1 || index >= array.size()) {
@@ -118,22 +121,42 @@ public class Heap {
 
         int leftChildValue = 0;
         int rightChildValue = 0;
+
+        int leftChildIndex = leftChildOf(index);
+        int rightChildIndex = rightChildOf(index);
+
         try {
-            leftChildValue = array.get(leftChildOf(index));
-        } catch (Exception e)   {
+            leftChildValue = array.get(leftChildIndex);
+        } catch (IndexOutOfBoundsException e)   {
             // Expected if no child. Do nothing and continue.
         }
         try {
-            rightChildValue = array.get(rightChildOf(index));
-        } catch (Exception e)   {
+            rightChildValue = array.get(rightChildIndex);
+        } catch (IndexOutOfBoundsException e)   {
             // Expected if no child. Do nothing and continue.
         }
 
-        if (leftChildValue == 0 && rightChildValue == 0)    {
-            // Our value is bubbled all the way to the bottom.
+        if ((leftChildValue == 0 && rightChildValue == 0) ||
+            (indexValue == leftChildValue || indexValue == rightChildValue))    {
+            // Our value is either bubbled all the way to the bottom,
+            // or the same value as one of its children.
+            // Value is in the correct spot. Return without further operations.
             return;
         }
-        // TODO: Finish method.
+        if (indexValue < leftChildValue)    {
+            swap(index, leftChildIndex);
+            bubbleDown(leftChildIndex);
+            return;
+        }
+        if (indexValue > rightChildValue && rightChildValue != 0)  {
+            swap(index, rightChildIndex);
+            bubbleDown(rightChildIndex);
+            return;
+        }
+
+        throw new UnknownError(
+            "Unknown error in method bubbleDown(). All if-conditions failed."
+        );
     }
 
     /**
