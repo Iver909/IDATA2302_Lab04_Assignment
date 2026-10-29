@@ -96,9 +96,39 @@ public class Heap {
         return lowest;
     }
 
+    /**
+     * Changes the value at index {@code i} to a new value {@code k}.
+     * After, the heap is rearranged to maintain correct priorities.
+     *
+     * @param i is the index whose value will be changed.
+     * @param k is the new value for index {@code i}.
+     * @throws IndexOutOfBoundsException if the given {@code index} is less than {@code 1},
+     *              or higher than max index {@code array.size() - 1}.
+     * @throws IllegalArgumentException if the value {@code k} is less than {@code 1},
+     *              or equal to/higher than the existing value at index {@code i}.
+     */
     public void decreaseKey(int i, int k) {
-        // TODO: Implement this operation
-        throw new RuntimeException("Not yet implemented");
+        if (i < 1 || i >= array.size()) {
+            throw new IndexOutOfBoundsException(
+                "Index less than 1 or higher than max array index."
+            );
+        }
+        if (k < 1)  {
+            throw new IllegalArgumentException("Only values above 0 are approved.");
+        }
+        if (k >= array.get(i))  {
+            throw new IllegalArgumentException(
+                "New value k must be smaller than the existing value at index i."
+            );
+        }
+
+        array.set(i, k);
+
+        if (k < array.get(parentOf(i))) {
+            bubbleUp(i);
+        }   else    {
+            bubbleDown(i);
+        }
     }
 
     /**
