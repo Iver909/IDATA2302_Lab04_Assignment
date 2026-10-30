@@ -126,8 +126,6 @@ public class Heap {
 
         if (k < array.get(parentOf(i))) {
             bubbleUp(i);
-        }   else    {
-            bubbleDown(i);
         }
     }
 
