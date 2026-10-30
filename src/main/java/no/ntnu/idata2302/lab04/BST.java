@@ -152,24 +152,36 @@ public class BST {
     }
 
     public String format() {
-        // TODO: Implement this operation
-        throw new RuntimeException("Not yet implemented!");
+        StringBuilder sb = new StringBuilder("[");
+        appendInOrder(sb);
+        return sb.append("]").toString();
     }
 
-}
-
-class NoSuchValue extends RuntimeException {
-
-    private int value;
-
-    public NoSuchValue(int givenValue) {
-        super();
-        this.value = givenValue;
+    private void appendInOrder(StringBuilder sb) {
+        if (hasLeft()) {
+            left.appendInOrder(sb);
+            sb.append(", ");
+        }
+        sb.append(value);
+        if (hasRight()) {
+            sb.append(", ");
+            right.appendInOrder(sb);
+        }
     }
-}
 
-class SuccessorNotFound extends RuntimeException {
-}
+    class NoSuchValue extends RuntimeException {
 
-class PredecessorNotFound extends RuntimeException {
+        private int value;
+
+        public NoSuchValue(int givenValue) {
+            super();
+            this.value = givenValue;
+        }
+    }
+
+    class SuccessorNotFound extends RuntimeException {
+    }
+
+    class PredecessorNotFound extends RuntimeException {
+    }
 }
